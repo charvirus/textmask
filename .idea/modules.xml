@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/filtertext.iml" filepath="$PROJECT_DIR$/.idea/filtertext.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/textmask.iml" filepath="$PROJECT_DIR$/.idea/textmask.iml" />
     </modules>
   </component>
 </project>
