@@ -10,6 +10,7 @@ from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
 from keras.layers import SimpleRNN, Embedding, Dense, LSTM, Dropout
 from keras.preprocessing.sequence import pad_sequences
+import pickle
 
 # model = Word2Vec.load('ko.bin')
 # wv = model.wv
@@ -49,8 +50,8 @@ tokenizer.fit_on_texts(X_data)  # 토큰화
 sequences = tokenizer.texts_to_sequences(X_data)  # 단어를 숫자값, 인덱스로 변환하여 저장
 
 word_to_index = tokenizer.word_index
-print(word_to_index)  # 단어의 인덱스와 숫자 값을 보여줌
-print(X_data[:3])
+# print(word_to_index)  # 단어의 인덱스와 숫자 값을 보여줌
+# print(X_data[:3])
 print(sequences[:3])
 
 flat_X_data = np.array(X_data).flatten().tolist()
@@ -59,32 +60,34 @@ flat_X_data = np.array(X_data).flatten().tolist()
 max_words = 1000
 maxlen = 50
 x = sequence.pad_sequences(sequences, maxlen)
-print(x.shape)
-print(x)
+# print(x.shape)
+# print(x)
 
 
-keras.backend.clear_session()
-model = Sequential()
-model.add(Embedding(max_words, 32))
-model.add(LSTM(32))
-model.add(Dense(1, activation='sigmoid'))
-model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
-
-# batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
-history = model.fit(x, Y_data, epochs=100, batch_size=20).history
-
-# plt.plot(history['loss'], label='loss')
+# keras.backend.clear_session()
+# model = Sequential()
+# model.add(Embedding(max_words, 32))
+# model.add(LSTM(32))
+# model.add(Dense(1, activation='sigmoid'))
+# model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 #
-# plt.legend()
-# plt.show()
+# # batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
+# history = model.fit(x, Y_data, epochs=100, batch_size=20).history
 #
-# plt.plot(history['acc'], label='acc')
-# plt.legend()
-# plt.show()
-
-# 현재 모델을 파일로 따로 저장함 , (적중률이 높은 모델이면 저장할 것)
-model.save("predict_test_model_10-06.h5")
-
+# # plt.plot(history['loss'], label='loss')
+# #
+# # plt.legend()
+# # plt.show()
+# #
+# # plt.plot(history['acc'], label='acc')
+# # plt.legend()
+# # plt.show()
+#
+# # 현재 모델을 파일로 따로 저장함 , (적중률이 높은 모델이면 저장할 것)
+# model.save("predict_test_model_10-06.h5")
+#
+# with open('word_to_index.pickle','wb') as fw:
+#     pickle.dump(word_to_index,fw)
 
 # vocab_size = len(word_to_index) + 1
 #
