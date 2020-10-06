@@ -6,14 +6,16 @@ import re
 import urllib.request
 from konlpy.tag import Okt
 from keras.preprocessing.text import Tokenizer
-from keras.models import Sequential
+from keras.preprocessing import sequence
+from keras.models import Sequential, load_model
 from keras.layers import SimpleRNN, Embedding, Dense, LSTM, Dropout
+from keras.preprocessing.sequence import pad_sequences
 
 # model = Word2Vec.load('ko.bin')
 # wv = model.wv
 
 # 엑셀 파일 경로
-excel_data = pd.read_excel('C:/Users/BrandonJ/Desktop/filtertext/인공지능 데이터수집 통합본(3).xlsx'
+excel_data = pd.read_excel('C:/Users/jhe/Desktop/textmask/인공지능 데이터수집 통합본(3).xlsx'
                            , sheet_name='Sheet1')
 
 # 첫번째 행의 머리말을 따옴
@@ -35,21 +37,53 @@ excel_data['내용'] = excel_data['내용'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣
 
 # 불용어
 stopwords = ['의', '가', '이', '은', '들', '는', '좀', '잘', '걍', '과', '도', '를', '으로', '자', '에', '와', '한', '하다'
-]
+             ]
 
-excel_data['분류'] = excel_data['분류'].replace(['Clean','Bad'],[0,1])
+excel_data['분류'] = excel_data['분류'].replace(['Clean', 'Bad'], [0, 1])
 
 X_data = excel_data['내용']
 Y_data = excel_data['분류']
 
 tokenizer = Tokenizer()
-tokenizer.fit_on_texts(X_data)    # 토큰화
-sequences = tokenizer.texts_to_sequences(X_data) # 단어를 숫자값, 인덱스로 변환하여 저장
+tokenizer.fit_on_texts(X_data)  # 토큰화
+sequences = tokenizer.texts_to_sequences(X_data)  # 단어를 숫자값, 인덱스로 변환하여 저장
 
 word_to_index = tokenizer.word_index
-print(word_to_index) # 단어의 인덱스와 숫자 값을 보여줌
+print(word_to_index)  # 단어의 인덱스와 숫자 값을 보여줌
+print(X_data[:3])
+print(sequences[:3])
 
+flat_X_data = np.array(X_data).flatten().tolist()
 # 여기 밑부터 막힘 학습을 시켜야하는데 어떻게 코딩을 해야할 지 모름
+
+max_words = 1000
+maxlen = 50
+x = sequence.pad_sequences(sequences, maxlen)
+print(x.shape)
+print(x)
+
+
+keras.backend.clear_session()
+model = Sequential()
+model.add(Embedding(max_words, 32))
+model.add(LSTM(32))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
+
+# batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
+history = model.fit(x, Y_data, epochs=100, batch_size=20).history
+
+# plt.plot(history['loss'], label='loss')
+#
+# plt.legend()
+# plt.show()
+#
+# plt.plot(history['acc'], label='acc')
+# plt.legend()
+# plt.show()
+
+# 현재 모델을 파일로 따로 저장함 , (적중률이 높은 모델이면 저장할 것)
+model.save("predict_test_model_10-06.h5")
 
 
 # vocab_size = len(word_to_index) + 1
@@ -100,7 +134,6 @@ print(word_to_index) # 단어의 인덱스와 숫자 값을 보여줌
 
 # model = Word2Vec(sentences=tokenized_data, size=100, window=5, min_count=5, workers=4, sg=0)
 
-#
 # for k in model.wv.vectors:
 #     print(k)
 
