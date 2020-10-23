@@ -48,6 +48,7 @@ excel_data['분류'] = excel_data['분류'].replace(['Clean', 'Bad'], [0, 1])
 max_words = 1500
 maxlen = 50
 X_data = excel_data['내용']
+print(X_data)
 Y_data = excel_data['분류']
 
 tokenizer = Tokenizer(num_words=max_words, oov_token="<OOV>")
