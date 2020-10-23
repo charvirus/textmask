@@ -45,7 +45,7 @@ stopwords = ['의', '가', '이', '은', '들', '는', '좀', '잘', '걍', '과
 
 excel_data['분류'] = excel_data['분류'].replace(['Clean', 'Bad'], [0, 1])
 
-max_words = 1000
+max_words = 1500
 maxlen = 50
 X_data = excel_data['내용']
 Y_data = excel_data['분류']
