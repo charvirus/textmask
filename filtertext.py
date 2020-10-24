@@ -45,7 +45,7 @@ stopwords = ['의', '가', '이', '은', '들', '는', '좀', '잘', '걍', '과
 
 excel_data['분류'] = excel_data['분류'].replace(['Clean', 'Bad'], [0, 1])
 
-max_words = 1500
+max_words = 10000
 maxlen = 50
 X_data = excel_data['내용']
 print(X_data)
@@ -58,24 +58,22 @@ word_to_index = tokenizer.word_index
 sequences = tokenizer.texts_to_sequences(X_data)  # 단어를 숫자값, 인덱스로 변환하여 저장
 
 print(word_to_index)  # 단어의 인덱스와 숫자 값을 보여줌
-# print(X_data[:3])
-
+print(sequences)
 flat_X_data = np.array(X_data).flatten().tolist()
 # 여기 밑부터 막힘 학습을 시켜야하는데 어떻게 코딩을 해야할 지 모름 (10-06)
 
 x = sequence.pad_sequences(sequences, maxlen)
-# print(x.shape)
-# print(x)
 
+print(x)
 keras.backend.clear_session()
 model = Sequential()
-model.add(Embedding(max_words, 115))
-model.add(LSTM(115))
+model.add(Embedding(max_words, 32))
+model.add(LSTM(32))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 
 # batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
-history = model.fit(x, Y_data, epochs=100, batch_size=50).history
+history = model.fit(x, Y_data, epochs=50, batch_size=1000).history
 
 test = ['진짜 쓰레기들', '미친 또라이 새끼들']
 

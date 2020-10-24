@@ -21,9 +21,9 @@ with open('word_to_index.pickle', 'rb') as fr:
     dict_loaded = pickle.load(fr)
 
 loaded_model = load_model('predict_test_model_10-06.h5')
-max_len = 50
-dict_loaded = Tokenizer(num_words=1000, oov_token="<OOV>")
 print(dict_loaded)
+max_len = 50
+dict_loaded = Tokenizer(num_words=10000, oov_token="<OOV>")
 
 
 # print(test_sequences)
@@ -35,25 +35,23 @@ def predict_sentence(subject_sentence):
     fword_to_index = dict_loaded.texts_to_sequences([cng_subject_sentence])
     pad_new = pad_sequences(fword_to_index, maxlen=max_len)
     score = float(loaded_model.predict(pad_new))
-    # if (score > 0.5):
-    result = "정확도 : {:.2f}%".format(score)
-    return result
+    if (score > 0.5):
+        result = "정확도 : {:.5f}%".format(score)
+        return result
 
 
-test = predict_sentence("맘충")
-print(test)
+print(predict_sentence('가나다라마바사'))
 
-
-@app.route("/")
-def main():
-    return "Matt Damon"
-
-
-@app.route("/<sentence>")
-def check_sentence(sentence):
-    result = predict_sentence(sentence)
-    return result
-
-
-if __name__ == "__main__":
-    app.run()
+# @app.route("/")
+# def main():
+#     return "Matt Damon"
+#
+#
+# @app.route("/<sentence>")
+# def check_sentence(sentence):
+#     result = predict_sentence(sentence)
+#     return result
+#
+#
+# if __name__ == "__main__":
+#     app.run()
