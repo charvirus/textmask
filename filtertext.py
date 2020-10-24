@@ -75,7 +75,7 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 
 # batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
-history = model.fit(x, Y_data, epochs=200, batch_size=50).history
+history = model.fit(x, Y_data, epochs=100, batch_size=50).history
 
 test = ['진짜 쓰레기들', '미친 또라이 새끼들']
 

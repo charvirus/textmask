@@ -8,5 +8,10 @@ app.debug = True
 def main():
     return "Matt Damon"
 
+@app.route("/check/<sentence>")
+def check_sentence(sentence):
+
+    return sentence
+
 if __name__ == "__main__":
     app.run()
