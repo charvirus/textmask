@@ -39,19 +39,21 @@ def predict_sentence(subject_sentence):
         result = "정확도 : {:.5f}%".format(score)
         return result
 
+
 @app.route('/')
 def hello_world():
     return 'Hello World!'
+
 
 @app.route('/send')
 def send():
     return render_template('post.html')
 
+
 @app.route('/post', methods=['POST'])
 def post():
     value = request.form['send']
-    result = predict_sentence(value)
-    return result
+    return value
 
 if __name__ == '__main__':
     app.run()
