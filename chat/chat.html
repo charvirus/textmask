@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Text-Mask</title>
+    <style>
+        #container {
+            width: 350px;
+            height: 500px;
+            border-radius: 8px;
+            background: #79AAFF;
+        }
+        #chatView {
+			overflow-y: scroll;
+            height: 90%;   
+			text-align: left;
+        }
+        #chatForm {
+            height: 10%;
+            border-top: 1px solid black;
+            text-align: center;
+        }
+        #msg {
+            width: 280px;
+            height: 40px;
+            border-radius: 5px
+			
+        }
+        #send {
+            width: 55px;
+            height: 45px;
+            border-radius: 5px;
+            background: #F7FE2E;
+            color: #6E6E6E;
+        }
+		.msgLine {
+			margin: 15px;
+		}
+		.msgBox {
+			border: 1px solid black;
+			background: #F7FE2E;
+			padding: 5px;
+			border: 15px;
+		}
+		images.img1{
+		position:absolute;
+		right: 700px;
+		top:50px;
+		}
+		
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="chatView">
+			<!--
+			<img src="images/img1.jpg" alt="propil" class="absolute" width="50px" height="50px">
+			-->
+        </div>
+
+        <form id="chatForm" onsubmit="return false">
+            <input type="text" class="message" id="msg" autocomplete="off">
+            <input type="submit" id="send" value="send">
+        </form>
+    </div>
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.min.js" integrity="sha512-/WwtKR6NnHomLo0O4w9QKc1INTPEJs7ko6u2aBTA1paPldhPl8LtXsi7a35iEZ69+9P5dcgVNESG8hrP4Y2t3w==" crossorigin="anonymous"></script>
+ 
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+	
+	socket.on( 'connect', function() {
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault(); 
+          let user_input = $( 'input.message' ).val()
+          socket.emit( 'my event', {
+            message : user_input,
+			userid : socket.io.engine.id
+          });
+		  
+          $( 'input.message' ).val( '' ).focus()
+        } )
+     } )
+ 
+	socket.on( 'my response', function( msg ) {
+        var msgLine = $('<div class="msgLine">');
+        var msgBox = $('<div class="msgBox">');
+                
+        msgBox.append(msg.message);
+        msgBox.css('display', 'inline-block');
+ 
+        msgLine.append(msgBox);
+		
+		if(msg.userid == socket.io.engine.id){
+			msgLine.css('text-align', 'right');
+		}
+		
+        $('#chatView').append(msgLine);
+ 
+        chatView.scrollTop = chatView.scrollHeight;
+    } )
+</script>
+
+
+</body>
+</html>
