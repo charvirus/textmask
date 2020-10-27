@@ -1,11 +1,8 @@
 import pandas as pd  # pandas 설치
 import numpy as np
-import matplotlib.pyplot as plt
 import keras
 import pickle
 import re
-import urllib.request
-from konlpy.tag import Okt
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
@@ -21,7 +18,6 @@ with open('word_to_index.pickle', 'rb') as fr:
     dict_loaded = pickle.load(fr)
 
 loaded_model = load_model('predict_test_model_10-06.h5')
-print(dict_loaded)
 max_len = 50
 dict_loaded = Tokenizer(num_words=10000, oov_token="<OOV>")
 

@@ -1,10 +1,8 @@
 import pandas as pd  # pandas 설치
 import numpy as np
-import matplotlib.pyplot as plt
 import keras
 import re
 import urllib.request
-from konlpy.tag import Okt
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
@@ -16,8 +14,7 @@ import pickle
 # wv = model.wv
 
 # 엑셀 파일 경로
-excel_data = pd.read_excel('runningfile.xlsx'
-                           , sheet_name='Sheet1')
+excel_data = pd.read_excel('runningfile.xlsx', sheet_name='Sheet1')
 
 # 첫번째 행의 머리말을 따옴
 # print(excel_data.columns)
