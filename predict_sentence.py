@@ -41,17 +41,3 @@ def predict_sentence(subject_sentence):
 
 
 print(predict_sentence('가나다라마바사'))
-
-# @app.route("/")
-# def main():
-#     return "Matt Damon"
-#
-#
-# @app.route("/<sentence>")
-# def check_sentence(sentence):
-#     result = predict_sentence(sentence)
-#     return result
-#
-#
-# if __name__ == "__main__":
-#     app.run()

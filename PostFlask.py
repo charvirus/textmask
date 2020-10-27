@@ -53,7 +53,8 @@ def send():
 @app.route('/post', methods=['POST'])
 def post():
     value = request.form['send']
-    return value
+    result = predict_sentence(value)
+    return result
 
 if __name__ == '__main__':
     app.run()
