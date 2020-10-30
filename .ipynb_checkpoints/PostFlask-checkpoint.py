@@ -1,26 +1,34 @@
-from flask import Flask, render_template, send_from_directory
-from flask_socketio import SocketIO
-from flask import request
-from flask import make_response
-import tensorflow as tf 
-
+import pandas as pd  # pandas 설치
+import numpy as np
 import keras
-
+import pickle
+import re
+import urllib.request
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
 from keras.layers import SimpleRNN, Embedding, Dense, LSTM, Dropout
 from keras.preprocessing.sequence import pad_sequences
+from flask import Flask, render_template, request
+import tensorflow as tf
 
-import pickle
+app = Flask(__name__)
+
+app.debug = True
 
 with open('word_to_index.pickle', 'rb') as fr:
     dict_loaded = pickle.load(fr)
+
 g = tf.Graph()
 session = tf.compat.v1.Session()
+
 loaded_model = load_model('predict_test_model_10-06.h5')
 max_len = 50
 dict_loaded = Tokenizer(num_words=10000, oov_token="<OOV>")
+
+
+# print(test_sequences)
+# print(dict_loaded)
 
 def predict_sentence(subject_sentence):
 
@@ -31,37 +39,28 @@ def predict_sentence(subject_sentence):
     score = float(loaded_model.predict(pad_new))
     if score > 0.5:
         result = "정확도 : {:.5f}%".format(score)
-        return result    
-    
-    
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-socketio = SocketIO(app)
+        return result
+
+
 
 @app.route('/')
-def index():
-    f = open('chat.html')
-    s = f.read()   
-    return s
-    #return render_template('chat.html')
+def hello_world():
+    return predict_sentence("개새끼") #'Hello World!'
 
-@app.route('/images/<path:path>')
-def send_images(path):
-    return send_from_directory('images', path)
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+@app.route('/send')
+def send():
+    return render_template('post.html')
 
-@socketio.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-       
-    msg = json["message"]
-   
-    print('received client id : ' + request.sid)
-    socketio.emit('my response', json)
+
+@app.route('/post', methods=['POST'])
+def post():
+    value = request.form['send']
+    result = predict_sentence(value)
+    return result
+
 
 if __name__ == '__main__':
-    
     samples = [
     "개새끼"
     ,"시발"
@@ -77,6 +76,4 @@ if __name__ == '__main__':
     for s in samples :
         print(s,":", predict_sentence(s))
 
-    
-    socketio.run(app, debug=True)
-    
+    app.run()

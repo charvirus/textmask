@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 from flask import request
 from flask import make_response
 import tensorflow as tf 
-
+import re
 import keras
 
 from keras.preprocessing.text import Tokenizer
@@ -76,7 +76,10 @@ if __name__ == '__main__':
 
     for s in samples :
         print(s,":", predict_sentence(s))
-
+    
+    
+    
+    
     
     socketio.run(app, debug=True)
     
