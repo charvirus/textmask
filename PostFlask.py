@@ -1,5 +1,6 @@
 import pandas as pd  # pandas 설치
 import numpy as np
+import matplotlib.pyplot as plt
 import keras
 import pickle
 import re
@@ -74,6 +75,6 @@ if __name__ == '__main__':
     ,"네 가능합니다"]
 
     for s in samples :
-        print(s,":", predict_sentence(s))
+        print(predict_sentence(s),":",s)
 
     app.run()
