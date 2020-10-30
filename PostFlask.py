@@ -61,7 +61,19 @@ def post():
 
 
 if __name__ == '__main__':
-    print(predict_sentence("개새끼"))
-    print(predict_sentence("시발"))
-    print(predict_sentence("이게 말이 되냐?"))
+    samples = [
+    "개새끼"
+    ,"시발"
+    ,"이게 말이 되냐?"
+    ,"개소리하네"
+    ,"미친놈들 천국이야"
+    ,"시발 ㅋㅋㅋㅋㅋㅋㅋㅋ"
+    ,"지랄하네"
+    ,"멍청한 것들"
+    ,"안녕하세요 혹시 거래 되시나요?"
+    ,"네 가능합니다"]
+
+    for s in samples :
+        print(s,":", predict_sentence(s))
+
     app.run()
