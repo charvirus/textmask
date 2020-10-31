@@ -1,5 +1,3 @@
-import pandas as pd  # pandas 설치
-import numpy as np
 import keras
 import pickle
 import re

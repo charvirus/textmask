@@ -30,7 +30,7 @@ def predict_sentence(subject_sentence):
     pad_new = pad_sequences(fword_to_index, maxlen=max_len)
     score = float(loaded_model.predict(pad_new))
     if score > 0.7:
-        result = "Bad : {:.5f}%".format(score)
+        result = "비속어가 감지되었습니다."
         return result
     else:
         return subject_sentence
