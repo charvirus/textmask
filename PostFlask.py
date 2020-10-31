@@ -1,6 +1,5 @@
 import pandas as pd  # pandas 설치
 import numpy as np
-import matplotlib.pyplot as plt
 import keras
 import pickle
 import re
@@ -38,9 +37,8 @@ def predict_sentence(subject_sentence):
     fword_to_index = dict_loaded.texts_to_sequences([cng_subject_sentence])
     pad_new = pad_sequences(fword_to_index, maxlen=max_len)
     score = float(loaded_model.predict(pad_new))
-    if score > 0.5:
-        result = "정확도 : {:.5f}%".format(score)
-        return result
+    result = "정확도 : {:.5f}%".format(score)
+    return result
 
 
 
