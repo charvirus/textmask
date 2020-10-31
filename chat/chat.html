@@ -71,8 +71,9 @@
  
 <script>
     var socket = io.connect('http://' + document.domain + ':' + location.port);
-	
+	console.log("서버 on...?");
 	socket.on( 'connect', function() {
+	    console.log("서버 on ?");
         var form = $( 'form' ).on( 'submit', function( e ) {
           e.preventDefault(); 
           let user_input = $( 'input.message' ).val()
@@ -85,10 +86,11 @@
         } )
      } )
  
-	socket.on( 'my response', function( msg ) {
+	socket.on( 'my response', function( msg,msg_result ) {
+
         var msgLine = $('<div class="msgLine">');
         var msgBox = $('<div class="msgBox">');
-                
+
         msgBox.append(msg.message);
         msgBox.css('display', 'inline-block');
  
@@ -103,7 +105,5 @@
         chatView.scrollTop = chatView.scrollHeight;
     } )
 </script>
-
-
 </body>
 </html>
