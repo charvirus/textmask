@@ -61,6 +61,8 @@ def messageReceived(methods=['GET', 'POST']):
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     msg = json["message"]
+    print(msg)
+    print(predict_sentence(msg))
     json["message"] = predict_sentence(json["message"])
     socketio.emit('my response', json)
 
