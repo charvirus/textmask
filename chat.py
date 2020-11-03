@@ -18,7 +18,7 @@ with open('word_to_index.pickle', 'rb') as fr:
     dict_loaded = pickle.load(fr)
 g = tf.Graph()
 session = tf.compat.v1.Session()
-loaded_model = load_model('predict_test_model_10-06.h5')
+loaded_model = load_model('model_11-03.h5')
 max_len = 50
 dict_loaded = Tokenizer(num_words=10000, oov_token="<OOV>")
 
@@ -29,7 +29,9 @@ def predict_sentence(subject_sentence):
     fword_to_index = dict_loaded.texts_to_sequences([cng_subject_sentence])
     pad_new = pad_sequences(fword_to_index, maxlen=max_len)
     score = float(loaded_model.predict(pad_new))
-    if score > 0.7:
+    print(score)
+    if score > 0.75:
+
         result = "비속어가 감지되었습니다."
         return result
     else:
@@ -68,7 +70,6 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 
 if __name__ == '__main__':
-
     # samples = [
     #     "개새끼"
     #     , "시발"
