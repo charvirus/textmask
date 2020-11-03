@@ -1,11 +1,10 @@
+import re
 from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO
 from flask import request
 from flask import make_response
-import tensorflow as tf 
-
+import tensorflow as tf
 import keras
-
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
@@ -31,9 +30,9 @@ def predict_sentence(subject_sentence):
     score = float(loaded_model.predict(pad_new))
     if score > 0.5:
         result = "정확도 : {:.5f}%".format(score)
-        return result    
-    
-    
+        return result
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
 socketio = SocketIO(app)
@@ -41,7 +40,7 @@ socketio = SocketIO(app)
 @app.route('/')
 def index():
     f = open('chat.html')
-    s = f.read()   
+    s = f.read()
     return s
     #return render_template('chat.html')
 
@@ -54,14 +53,14 @@ def messageReceived(methods=['GET', 'POST']):
 
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
-       
+
     msg = json["message"]
-   
+
     print('received client id : ' + request.sid)
     socketio.emit('my response', json)
 
 if __name__ == '__main__':
-    
+
     samples = [
     "개새끼"
     ,"시발"
@@ -77,6 +76,5 @@ if __name__ == '__main__':
     for s in samples :
         print(s,":", predict_sentence(s))
 
-    
+
     socketio.run(app, debug=True)
-    

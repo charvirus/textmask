@@ -5,7 +5,6 @@ from flask import make_response
 import tensorflow as tf
 import re
 import keras
-
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing import sequence
 from keras.models import Sequential, load_model
