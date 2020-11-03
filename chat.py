@@ -17,7 +17,7 @@ with open('word_to_index.pickle', 'rb') as fr:
     dict_loaded = pickle.load(fr)
 g = tf.Graph()
 session = tf.compat.v1.Session()
-loaded_model = load_model('model_11-03.h5')
+loaded_model = load_model('predict_test_model_10-06.h5')
 max_len = 50
 dict_loaded = Tokenizer(num_words=10000, oov_token="<OOV>")
 
