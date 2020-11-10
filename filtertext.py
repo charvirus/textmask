@@ -9,6 +9,7 @@ from keras.models import Sequential, load_model
 from keras.layers import SimpleRNN, Embedding, Dense, LSTM, Dropout
 from keras.preprocessing.sequence import pad_sequences
 import pickle
+from matplotlib import pyplot as plt
 
 # 엑셀 파일 경로
 excel_data = pd.read_excel('runningfile.xlsx', sheet_name='Sheet1')
@@ -57,11 +58,17 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
 
 # batch_size는 변수로 지정할것 예를들어 데이터가 1000개면 그것의 10%정도로 할 것
-history = model.fit(x, Y_data, epochs=50, batch_size=1000).history
+history = model.fit(x, Y_data, epochs=200, batch_size=1000).history
 
 
 # 현재 모델을 파일로 따로 저장함 , (적중률이 높은 모델이면 저장할 것)
 model.save("predict_test_model_10-06.h5")
 
-with open('word_to_index.pickle', 'wb') as fw:
-    pickle.dump(word_to_index, fw)
+with open('tokenizer.pickle', 'wb') as fw:
+    # pickle.dump(word_to_index, fw)
+    pickle.dump(tokenizer, fw, protocol=pickle.HIGHEST_PROTOCOL)
+
+plt.plot(history['acc'])
+plt.plot(history['loss'])
+plt.show()
+

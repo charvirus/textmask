@@ -33,5 +33,3 @@ def predict_sentence(subject_sentence):
         result = "정확도 : {:.5f}%".format(score)
         return result
 
-
-print(predict_sentence('가나다라마바사'))
