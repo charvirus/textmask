@@ -9,7 +9,7 @@ from keras.models import Sequential, load_model
 from keras.layers import SimpleRNN, Embedding, Dense, LSTM, Dropout
 from keras.preprocessing.sequence import pad_sequences
 import pickle
-from matplotlib import pyplot as plt
+
 
 # 엑셀 파일 경로
 excel_data = pd.read_excel('runningfile.xlsx', sheet_name='Sheet1')

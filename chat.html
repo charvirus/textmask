@@ -6,49 +6,127 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Text-Mask</title>
     <style>
-        #container {
-            width: 350px;
-            height: 500px;
-            border-radius: 8px;
-            background: #79AAFF;
+
+        *:focus { outline: none; }
+
+        ::-webkit-scrollbar {
+          width: 10px;
         }
+
+        ::-webkit-scrollbar-track {
+          background: #97bdff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: gray;
+          border-radius:50px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+
+        #container {
+            width: 600px;
+            height: 700px;
+            border-radius: 8px;
+            background: #97bdff;
+            overflowX:hidden;
+        }
+
+
         #chatView {
+            overflow-x:hidden;
 			overflow-y: scroll;
             height: 90%;   
 			text-align: left;
         }
         #chatForm {
             height: 10%;
-            border-top: 1px solid black;
+            border-top: 1px solid #969696;
             text-align: center;
+            background-color:#969696;
+            padding-top:15px;
         }
         #msg {
-            width: 280px;
-            height: 40px;
-            border-radius: 5px
-			
+            width: 430px;
+            height: 30px;
+            border-radius: 8px;
+            left: 20px;
+            bottom: 25px;
+            font-size:18px;
+            padding:10px;
+            border:0;
+            transition:1s;
+            box-shadow:4px 4px 4px #ccc inset;
         }
+
+        #msg:focus{
+            width: 430px;
+            height: 30px;
+            border-radius: 8px;
+            left: 20px;
+            bottom: 25px;
+            font-size:18px;
+            transition:1s;
+            padding:10px;
+            border:0;
+            box-shadow:1px 1px 4px #ccc inset;
+        }
+
         #send {
-            width: 55px;
-            height: 45px;
+            width: 100px;
+            height: 55px;
             border-radius: 5px;
-            background: #F7FE2E;
+            background: #fff599;
             color: #6E6E6E;
+
+            right:30px;
+            bottom:25px;
+            font-size:16px;
         }
 		.msgLine {
 			margin: 15px;
 		}
-		.msgBox {
-			border: 1px solid black;
-			background: #F7FE2E;
-			padding: 5px;
-			border: 15px;
-		}
+
 		images.img1{
 		position:absolute;
 		right: 700px;
 		top:50px;
 		}
+
+
+		.msgBox {
+	position: relative;
+	background: #fff599;
+	border: 2px solid #de9750;
+	padding:15px;
+	border-radius:5px;
+	font-size:17px;
+}
+.msgBox:after, .msgBox:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.msgBox:after {
+	border-color: rgba(255, 245, 153, 0);
+	border-left-color: #fff599;
+	border-width: 7px;
+	margin-top: -7px;
+}
+.msgBox:before {
+	border-color: rgba(222, 151, 80, 0);
+	border-left-color: #de9750;
+	border-width: 9px;
+	margin-top: -9px;
+}
 		
     </style>
 </head>
